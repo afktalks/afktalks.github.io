@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AFK Talks</title>
+<meta name="theme-color" content="#0E0F13">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AFK Talks">
+<meta property="og:title" content="AFK Talks">
+<meta property="og:description" content="Живу играми. Мнения, истории и споры об играх.">
+<meta property="og:image" content="https://afktalks.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://afktalks.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="AFK Talks — живу играми. Мнения, истории и споры об играх.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Onest:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+
+/* Layout: one narrow column, phone-first link-in-bio card. Avatar sticker on top, stacked link buttons, last post. Single committed brand look. */
+:root{
+  --yellow:#FFD23F;
+  --ink:#0E0F13;
+  --ink-2:#18191F;
+  --paper:#F4F4F0;
+  --muted:#8E8F99;
+  --line:#2A2B33;
+  --display:"Dela Gothic One","Arial Black",Impact,sans-serif;
+  --body:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+html,body{min-height:100%}
+body{background:var(--ink);color:var(--paper);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(ellipse 70% 16% at 50% 69%,rgba(255,210,63,.16),transparent 70%),radial-gradient(ellipse 90% 30% at 50% 69%,rgba(255,79,139,.10),transparent 75%),radial-gradient(circle at 50% -10%,rgba(255,210,63,.12),transparent 55%);background-repeat:no-repeat;background-attachment:fixed}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px;border-radius:10px}
+
+.page{max-width:460px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:48px 40px;display:flex;flex-direction:column;align-items:center;gap:28px}
+
+/* Avatar sticker — same as the profile picture */
+.avatar{width:148px;height:148px;border-radius:50%;background:var(--yellow);position:relative;display:grid;place-items:center;box-shadow:0 0 0 6px var(--ink),0 0 0 7px var(--line)}
+.avatar b{font-family:var(--display);font-weight:400;font-size:46px;line-height:1;color:var(--ink);transform:translateY(-9px);letter-spacing:-.01em}
+.avatar i{position:absolute;right:22px;bottom:32px;font-style:normal;font-family:var(--display);font-size:16px;line-height:1;background:var(--ink);color:var(--paper);padding:5px 9px 4px;border-radius:7px;transform:rotate(-9deg);animation:wobble 4s ease-in-out infinite}
+@keyframes wobble{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(-4deg) translateY(-2px)}}
+
+.intro{text-align:center;display:flex;flex-direction:column;gap:8px}
+h1{font-family:var(--display);font-weight:400;font-size:34px;line-height:1.05;margin:0}
+.handle{font-family:var(--mono);font-size:14px;color:var(--yellow)}
+.bio{margin:4px 0 0;color:#C8C9D0;font-size:16px;text-wrap:balance}
+
+/* Link buttons */
+.links{width:100%;display:flex;flex-direction:column;gap:12px}
+.link{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:16px;background:var(--ink-2);border:1px solid var(--line);transition:transform .15s ease,background .15s ease,border-color .15s ease}
+.link:hover{transform:translateY(-2px) rotate(-.6deg);border-color:var(--yellow)}
+.link .ico{flex:none;width:40px;height:40px;border-radius:11px;background:var(--paper);color:var(--ink);display:grid;place-items:center}
+.link .ico svg{width:22px;height:22px}
+.link .txt{min-width:0;flex:1;display:flex;flex-direction:column}
+.link .name{font-weight:700;font-size:17px}
+.link .what{font-size:14px;color:var(--muted)}
+.link .arrow{flex:none;font-family:var(--display);font-size:18px;color:var(--muted);transition:transform .15s ease,color .15s ease}
+.link:hover .arrow{transform:translateX(3px);color:var(--yellow)}
+.link.soon{cursor:default}
+.link.soon .name{color:#9A9BA3}
+.link.soon .what{color:#6B6C75}
+.link.soon .ico{background:#5C5D66;color:var(--ink)}
+.link.soon:hover{transform:none;border-color:var(--line)}
+.link .badge{flex:none;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);color:var(--muted);padding:3px 8px;border-radius:999px}
+.link.main{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+.link.main .ico{background:var(--ink);color:var(--yellow)}
+.link.main .what,.link.main .arrow{color:rgba(14,15,19,.65)}
+.link.main:hover .arrow{color:var(--ink)}
+
+/* Last post */
+.last{width:100%;display:flex;flex-direction:column;gap:10px}
+.last .label{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-left:4px}
+.post{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:300px;border-radius:18px;overflow:hidden;isolation:isolate;border:1px solid var(--line)}
+.post img{position:absolute;inset:0;width:100%;height:78%;object-fit:cover;z-index:-2;transition:transform .5s ease}
+.post::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(14,15,19,0) 25%,rgba(14,15,19,.8) 58%,var(--ink) 78%)}
+.post:hover img{transform:scale(1.04)}
+.post .body{padding:20px}
+.post h2{font-family:var(--display);font-weight:400;font-size:28px;line-height:1.08;margin:0;text-wrap:balance}
+.post h2 em{font-style:normal;color:var(--yellow)}
+.post p{margin:8px 0 0;font-size:14px;color:#C8C9D0}
+
+/* 3D background */
+#bg3d{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+.page{position:relative;z-index:1}
+.intro{text-shadow:0 2px 14px rgba(14,15,19,.9)}
+
+/* Language switch */
+.lang{position:fixed;z-index:5;top:calc(env(safe-area-inset-top,0px) + 14px);right:max(14px,calc(env(safe-area-inset-right,0px) + 14px));display:flex;background:rgba(24,25,31,.85);border:1px solid var(--line);border-radius:999px;padding:3px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.lang button{font-family:var(--mono);font-size:12px;letter-spacing:.06em;border:0;background:transparent;color:var(--muted);padding:6px 10px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--yellow);color:var(--ink);font-weight:500}
+.lang button:hover:not([aria-pressed="true"]){color:var(--paper)}
+
+/* Now playing */
+.now[hidden]{display:none!important}
+.now{align-self:center;display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px;padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(24,25,31,.85);font-size:14px;color:#C8C9D0;text-shadow:none}
+.now b{color:var(--paper);font-weight:700}
+.now .g{white-space:nowrap}
+.now .plat{font-family:var(--mono);font-size:12px;color:var(--yellow)}
+.now .dot{width:8px;height:8px;border-radius:50%;background:var(--k,#FF4F8B);box-shadow:0 0 0 0 rgba(255,79,139,.6);animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,79,139,.6)}100%{box-shadow:0 0 0 9px rgba(255,79,139,0)}}
+
+/* Coin counter */
+.coins{position:fixed;z-index:5;top:calc(env(safe-area-inset-top,0px) + 14px);left:max(14px,calc(env(safe-area-inset-left,0px) + 14px));display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:13px;color:var(--muted);background:rgba(24,25,31,.85);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 8px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.coins b{color:var(--yellow);font-weight:500;margin-left:4px}
+.coins .c{width:16px;height:16px;border-radius:50%;background:var(--yellow);box-shadow:inset 0 0 0 3px #E8B92A}
+.coins.bump{animation:bump .3s ease}
+@keyframes bump{50%{transform:scale(1.18)}}
+
+/* Toast (AFK + achievement) */
+.toast{position:fixed;z-index:6;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translate(-50%,20px);opacity:0;transition:opacity .3s ease,transform .3s ease;display:flex;align-items:center;gap:12px;max-width:calc(100% - 32px);width:max-content;background:var(--ink-2);border:1px solid var(--yellow);border-radius:14px;padding:12px 18px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast .tt{display:flex;flex-direction:column;min-width:0}
+.toast b{font-family:var(--display);font-weight:400;font-size:17px;color:var(--paper)}
+.toast small{font-size:13px;color:var(--muted)}
+.toast small:empty{display:none}
+.toast.ach{border-color:var(--yellow)}
+.toast.ach b{color:var(--yellow);font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.toast.ach small{font-size:15px;color:var(--paper);font-weight:700}
+.toast .trophy{flex:none;width:40px;height:40px;border-radius:50%;background:var(--yellow);position:relative}
+.toast .trophy::before{content:"";position:absolute;inset:8px;background:var(--ink);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+
+/* AFK zZz */
+.avatar .zzz{position:absolute;top:-4px;right:-26px;display:flex;gap:2px;font-family:var(--display);color:var(--yellow);pointer-events:none;opacity:0;transition:opacity .6s ease}
+.avatar .zzz span{display:inline-block;font-size:16px;animation:zz 2.4s ease-in-out infinite}
+.avatar .zzz span:nth-child(2){font-size:21px;animation-delay:.4s;transform:translateY(-8px)}
+.avatar .zzz span:nth-child(3){font-size:27px;animation-delay:.8s;transform:translateY(-18px)}
+@keyframes zz{0%,100%{opacity:.35;translate:0 0}50%{opacity:1;translate:0 -6px}}
+body.afk .avatar .zzz{opacity:1}
+.avatar i{transition:transform .8s ease}
+body.afk .avatar i{animation:none;transform:rotate(-24deg) translateY(4px)}
+
+footer{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+
+<canvas id="bg3d" aria-hidden="true"></canvas>
+<div class="lang" role="group" aria-label="Язык / Language"><button type="button" id="lang-ru" data-lang="ru">RU</button><button type="button" id="lang-en" data-lang="en">EN</button></div>
+<div class="coins" id="coins" hidden aria-live="polite"><span class="c" aria-hidden="true"></span><b id="coin-n">0</b><span>/</span><span id="coin-t">0</span></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<main class="page">
+  <div class="avatar" aria-hidden="true"><b>AFK</b><i>talks</i><span class="zzz"><span>z</span><span>z</span><span>Z</span></span></div>
+
+  <div class="intro">
+    <h1>AFK Talks</h1>
+    <span class="handle">@afktalks</span>
+    <div class="now" id="now" hidden><span class="dot" aria-hidden="true"></span><span data-i18n="now">Сейчас играю:</span> <span class="g"><b id="now-game"></b> <span class="plat" id="now-plat"></span></span></div>
+    <p class="bio" data-i18n="bio">Живу играми. Начинающий инди-разработчик. Мнения, истории и споры об играх.</p>
+  </div>
+
+  <nav class="links" aria-label="Соцсети" data-i18n-aria="navLabel">
+    <a class="link main" href="https://www.instagram.com/afktalks/" target="_blank" rel="noopener">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+      <span class="txt"><span class="name">Instagram</span><span class="what" data-i18n="ig">Карусели и посты</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="link" href="https://t.me/afktalks" target="_blank" rel="noopener">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.2 2.9 11.3c-1.3.5-1.2 1.3-.2 1.6l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.4-1.5zM8.7 14l9.6-6.1c.5-.3.9-.1.5.2l-8.1 7.3-.3 3.4L8.7 14z"/></svg></span>
+      <span class="txt"><span class="name">Telegram</span><span class="what" data-i18n="tg">Новости и опросы</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="link" href="https://www.threads.com/@afktalks" target="_blank" rel="noopener">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M16.5 11.2c-.6-2.6-2.4-3.7-4.6-3.7-2.6 0-4.4 1.9-4.4 4.6 0 2.8 1.9 4.6 4.6 4.6 2.2 0 3.6-1.2 3.6-2.9 0-1.7-1.4-2.6-3.3-2.6-1.6 0-2.7.8-2.7 2 0 1.1 1 1.8 2.3 1.8"/><path d="M19.5 15.5c-1.1 3-3.8 5-7.6 5-5 0-8.4-3.5-8.4-8.5S7 3.5 12 3.5c3.6 0 6.2 1.7 7.3 4.6"/></svg></span>
+      <span class="txt"><span class="name">Threads</span><span class="what" data-i18n="th">Короткие мысли об играх</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <div class="link soon" aria-disabled="true">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span>
+      <span class="txt"><span class="name">Boosty</span><span class="what" data-i18n="boosty">Поддержать из России и СНГ</span></span>
+      <span class="badge" data-i18n="soon">скоро</span>
+    </div>
+    <div class="link soon" aria-disabled="true">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span>
+      <span class="txt"><span class="name">Patreon</span><span class="what" data-i18n="patreon">Поддержать из других стран</span></span>
+      <span class="badge" data-i18n="soon">скоро</span>
+    </div>
+  </nav>
+
+
+  <footer>© 2026 AFK Talks</footer>
+</main>
+
+<script>
+// ===== Сейчас играю: впиши игру и платформу. Пустая строка — блок скрыт =====
+var NOW_PLAYING = { game: "Zelda: Ocarina of Time", platform: "Switch 2" };
+
+(function(){
+  var T={
+    ru:{now:"Сейчас играю:",bio:"Живу играми. Начинающий инди-разработчик. Мнения, истории и споры об играх.",ig:"Карусели и посты",tg:"Новости и опросы",th:"Короткие мысли об играх",tt:"Видео об индустрии",boosty:"Поддержать из России и СНГ",patreon:"Поддержать из других стран",soon:"скоро",last:"Последний пост",etAlt:"Раскопки картриджей Atari на свалке в Аламогордо",etTitle:"Игру <em>E.T.</em> закопали в пустыне",etText:"В 1983 году Atari вывезла картриджи на свалку в Аламогордо. В 2014-м их откопали.",navLabel:"Соцсети",afk:"Похоже, ты AFK",afkMove:"Подвигай мышкой, чтобы вернуться",afkTap:"Коснись экрана, чтобы вернуться",back:"С возвращением!",achTitle:"Ачивка получена",achName:"Не AFK",achDesc:"собрал все монеты"},
+    en:{now:"Now playing:",bio:"I live for games. Beginner indie developer. Opinions, stories and debates about games.",ig:"Carousels and posts",tg:"News and polls",th:"Quick thoughts on games",tt:"Videos about the games industry",boosty:"Support from Russia and CIS",patreon:"Support from other countries",soon:"soon",last:"Latest post",etAlt:"Excavation of Atari cartridges at the Alamogordo landfill",etTitle:"<em>E.T.</em> was buried in the desert",etText:"In 1983 Atari dumped cartridges at a landfill in Alamogordo. In 2014 they were dug up.",navLabel:"Social links",afk:"Looks like you're AFK",afkMove:"Move the mouse to come back",afkTap:"Tap the screen to come back",back:"Welcome back!",achTitle:"Achievement unlocked",achName:"Not AFK",achDesc:"collected every coin"}
+  };
+  function apply(lang){
+    var t=T[lang]; document.documentElement.lang=lang; window.AFK_T=T; window.AFK_LANG=lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){ el.textContent=t[el.getAttribute('data-i18n')]; });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){ el.innerHTML=t[el.getAttribute('data-i18n-html')]; });
+    document.querySelectorAll('[data-i18n-alt]').forEach(function(el){ el.alt=t[el.getAttribute('data-i18n-alt')]; });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function(el){ el.setAttribute('aria-label',t[el.getAttribute('data-i18n-aria')]); });
+    document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-lang')===lang ? 'true':'false'); });
+    try{ localStorage.setItem('afk-lang',lang); }catch(e){}
+  }
+  var saved=null; try{ saved=localStorage.getItem('afk-lang'); }catch(e){}
+  var initial = saved==='ru'||saved==='en' ? saved : (/^(ru|uk|be|kk)/i.test(navigator.language||'ru') ? 'ru' : 'en');
+  document.querySelectorAll('.lang button').forEach(function(b){ b.addEventListener('click',function(){ apply(b.getAttribute('data-lang')); }); });
+  if (NOW_PLAYING.game) {
+    document.getElementById('now-game').textContent=NOW_PLAYING.game;
+    document.getElementById('now-plat').textContent=NOW_PLAYING.platform ? '· '+NOW_PLAYING.platform : '';
+    document.getElementById('now').hidden=false;
+  }
+  apply(initial);
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  var T = function(k){ var t=window.AFK_T&&window.AFK_T[window.AFK_LANG||'ru']; return t?t[k]:''; };
+
+  // ---------- toast ----------
+  var toastEl=document.getElementById('toast'), toastTimer;
+  function toast(title, sub, ms, ach){
+    toastEl.className='toast'+(ach?' ach':'');
+    toastEl.innerHTML=(ach?'<span class="trophy" aria-hidden="true"></span>':'')+'<span class="tt"><b></b><small></small></span>';
+    toastEl.querySelector('b').textContent=title; toastEl.querySelector('small').textContent=sub||'';
+    toastEl.hidden=false; requestAnimationFrame(function(){ toastEl.classList.add('show'); });
+    clearTimeout(toastTimer);
+    if(ms) toastTimer=setTimeout(hideToast, ms);
+  }
+  function hideToast(){ toastEl.classList.remove('show'); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ toastEl.hidden=true; },300); }
+
+  // ---------- 8-bit sound (starts only after a tap) ----------
+  var actx=null;
+  function audio(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } } if(actx.state==='suspended') actx.resume(); return actx; }
+  function beep(freq,start,dur,vol){ var a=audio(); if(!a) return; var o=a.createOscillator(), g=a.createGain(), t0=a.currentTime+start;
+    o.type='square'; o.frequency.setValueAtTime(freq,t0); g.gain.setValueAtTime(vol||.06,t0); g.gain.exponentialRampToValueAtTime(.0001,t0+dur);
+    o.connect(g); g.connect(a.destination); o.start(t0); o.stop(t0+dur+.03); }
+  function coinSound(){ beep(880,0,.07); beep(1175,.07,.3); }
+  function fanfare(){ [523,659,784,1047].forEach(function(f,i){ beep(f,i*.1,.16); }); beep(1319,.42,.6,.07); }
+
+  if (!window.THREE) return;
+  var canvas=document.getElementById('bg3d'), renderer;
+  try { renderer=new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true}); } catch(e) { return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.setClearColor(0x000000,0);
+
+  var scene=new THREE.Scene();
+  scene.fog=new THREE.Fog(0x0E0F13,20,42);
+  var FOV=45, camera=new THREE.PerspectiveCamera(FOV,1,.1,100); camera.position.z=20;
+  scene.add(new THREE.AmbientLight(0xffffff,.55));
+  var key=new THREE.DirectionalLight(0xffffff,.95); key.position.set(6,9,10); scene.add(key);
+  var rim=new THREE.DirectionalLight(0xFFD23F,.6); rim.position.set(-8,-5,-4); scene.add(rim);
+
+  var C={y:0xFFD23F, p:0xF4F4F0, k:0xFF4F8B, d:0x2A2B33};
+  function mat(c,extra){ return new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.45,metalness:.05,flatShading:true},extra||{})); }
+  function rand(a,b){ return a+Math.random()*(b-a); }
+
+  // ---------- shapes ----------
+  function dpad(){ var a=.42,L=1.25,s=new THREE.Shape();
+    s.moveTo(-a,-L); s.lineTo(a,-L); s.lineTo(a,-a); s.lineTo(L,-a); s.lineTo(L,a); s.lineTo(a,a);
+    s.lineTo(a,L); s.lineTo(-a,L); s.lineTo(-a,a); s.lineTo(-L,a); s.lineTo(-L,-a); s.lineTo(-a,-a); s.lineTo(-a,-L);
+    var g=new THREE.ExtrudeGeometry(s,{depth:.45,bevelEnabled:true,bevelSize:.08,bevelThickness:.08,bevelSegments:1}); g.center(); return new THREE.Mesh(g,mat(C.p)); }
+  function coin(){ var grp=new THREE.Group();
+    var m=new THREE.Mesh(new THREE.CylinderGeometry(1,1,.24,28),mat(C.y,{metalness:.35,roughness:.3,emissive:0x6b5000})); m.rotation.x=Math.PI/2; grp.add(m);
+    var inner=new THREE.Mesh(new THREE.CylinderGeometry(.62,.62,.3,28),mat(0xE8B92A,{metalness:.35,roughness:.3,emissive:0x4a3600})); inner.rotation.x=Math.PI/2; grp.add(inner);
+    var hit=new THREE.Mesh(new THREE.SphereGeometry(1.6,8,6),new THREE.MeshBasicMaterial()); hit.visible=false; grp.add(hit); grp.userData.hit=hit;
+    return grp; }
+  function heart(){ var rows=['.XX.XX.','XXXXXXX','XXXXXXX','.XXXXX.','..XXX..','...X...'];
+    var grp=new THREE.Group(),s=.32,geo=new THREE.BoxGeometry(s*.94,s*.94,s*.94),m=mat(C.k);
+    rows.forEach(function(r,yi){ for(var xi=0;xi<r.length;xi++){ if(r[xi]==='X'){ var b=new THREE.Mesh(geo,m); b.position.set((xi-3)*s,(2.5-yi)*s,0); grp.add(b);} } }); return grp; }
+  function cartridge(){ var grp=new THREE.Group();
+    grp.add(new THREE.Mesh(new THREE.BoxGeometry(2,2.4,.36),mat(C.d)));
+    var lab=new THREE.Mesh(new THREE.BoxGeometry(1.55,1.15,.4),mat(C.y)); lab.position.y=.35; grp.add(lab);
+    for(var i=0;i<5;i++){ var r=new THREE.Mesh(new THREE.BoxGeometry(.18,.3,.42),mat(C.p)); r.position.set(-.6+i*.3,-.95,0); grp.add(r); } return grp; }
+  function gem(){ return new THREE.Mesh(new THREE.OctahedronGeometry(1,0),mat(C.k,{roughness:.25,metalness:.2})); }
+  function ring(){ return new THREE.Mesh(new THREE.TorusGeometry(.9,.26,10,28),mat(C.y,{metalness:.35,roughness:.3})); }
+  function buttons(){ var grp=new THREE.Group(),geo=new THREE.CylinderGeometry(.42,.42,.3,20);
+    [[0,.75,C.p],[.75,0,C.k],[0,-.75,C.p],[-.75,0,C.k]].forEach(function(b){ var m=new THREE.Mesh(geo,mat(b[2])); m.rotation.x=Math.PI/2; m.position.set(b[0],b[1],0); grp.add(m); }); return grp; }
+  function stick(){ var grp=new THREE.Group();
+    grp.add(new THREE.Mesh(new THREE.CylinderGeometry(1,1.15,.45,20),mat(C.p)));
+    var rod=new THREE.Mesh(new THREE.CylinderGeometry(.14,.14,1.3,10),mat(C.d)); rod.position.y=.85; grp.add(rod);
+    var ball=new THREE.Mesh(new THREE.SphereGeometry(.45,14,10),mat(C.k)); ball.position.y=1.6; grp.add(ball); return grp; }
+  function pixelCube(){ var grp=new THREE.Group(),g=new THREE.BoxGeometry(1.5,1.5,1.5);
+    grp.add(new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color:C.y})));
+    grp.add(new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:C.y,transparent:true,opacity:.08}))); return grp; }
+  var makers=[dpad,heart,cartridge,gem,ring,buttons,stick,pixelCube];
+
+  // ---------- environment: synthwave grids + pixel dust ----------
+  var env=new THREE.Group(); scene.add(env);
+  var STEP=2, FLOOR_Y=-6.5;
+  var floorMat=new THREE.LineBasicMaterial({color:C.y,transparent:true,opacity:.5});
+  var ceilMat=new THREE.LineBasicMaterial({color:C.k,transparent:true,opacity:.2});
+  function makeGrid(y,m){ var half=44,near=14,far=-46;
+    var a=[]; for(var x=-half;x<=half;x+=STEP){ a.push(x,y,near,x,y,far); }
+    var ga=new THREE.BufferGeometry(); ga.setAttribute('position',new THREE.Float32BufferAttribute(a,3)); env.add(new THREE.LineSegments(ga,m));
+    var b=[]; for(var z=near;z>=far;z-=STEP){ b.push(-half,y,z,half,y,z); }
+    var gb=new THREE.BufferGeometry(); gb.setAttribute('position',new THREE.Float32BufferAttribute(b,3));
+    var moving=new THREE.LineSegments(gb,m); env.add(moving); return moving; }
+  var floorGrid=makeGrid(FLOOR_Y,floorMat), ceilGrid=makeGrid(9.5,ceilMat);
+
+  var N=window.innerWidth<760?90:170, dust=new Float32Array(N*3), dcol=new Float32Array(N*3), dspd=new Float32Array(N);
+  var palette=[new THREE.Color(C.y),new THREE.Color(C.k),new THREE.Color(C.p)];
+  for(var i=0;i<N;i++){ dust[i*3]=rand(-26,26); dust[i*3+1]=rand(-12,14); dust[i*3+2]=rand(-30,6);
+    var c=palette[i%7===0?1:(i%3===0?2:0)]; dcol[i*3]=c.r; dcol[i*3+1]=c.g; dcol[i*3+2]=c.b; dspd[i]=rand(.2,.7); }
+  var dgeo=new THREE.BufferGeometry();
+  dgeo.setAttribute('position',new THREE.BufferAttribute(dust,3)); dgeo.setAttribute('color',new THREE.BufferAttribute(dcol,3));
+  env.add(new THREE.Points(dgeo,new THREE.PointsMaterial({size:.13,vertexColors:true,transparent:true,opacity:.85})));
+
+  // ---------- objects ----------
+  var world=new THREE.Group(); scene.add(world);
+  var items=[], coins=[], lastW=0;
+  var coinEl=document.getElementById('coins'), coinN=document.getElementById('coin-n'), coinT=document.getElementById('coin-t');
+  var collected=0, respawnTimer;
+
+  function place(obj, i, count, narrow, w, h, zMin, zMax, sMin, sMax){
+    var z=rand(zMin,zMax), dist=camera.position.z-z;
+    var visH=2*Math.tan(THREE.MathUtils.degToRad(FOV/2))*dist, visW=visH*camera.aspect, wpp=visH/h, x;
+    var clearPx=narrow?0:Math.min(275,w*.5);
+    if(clearPx>0){ var inner=clearPx*wpp+1.2, outer=visW/2-.8; x=(i%2?1:-1)*rand(inner,Math.max(inner,outer)); }
+    else { x=(i%2?1:-1)*rand(.34,.5)*visW; }
+    var y=(.5-(i+.5)/count)*visH*.92+rand(-.6,.6);
+    obj.position.set(x,y,z);
+    var s=rand(sMin,sMax); obj.scale.setScalar(s);
+    obj.rotation.set(rand(0,6.28),rand(0,6.28),rand(0,6.28));
+    world.add(obj);
+    return {obj:obj, y:y, s:s, restY:FLOOR_Y+.55*s+rand(0,.25), rx:rand(-.4,.4), ry:rand(.15,.6)*(Math.random()<.5?-1:1), bob:rand(.25,.55), f:rand(.4,.9), ph:rand(0,6.28)};
+  }
+
+  function build(){
+    var w=window.innerWidth, h=window.innerHeight, narrow=w<760;
+    items.forEach(function(it){ world.remove(it.obj); }); items=[]; coins=[];
+    var count=narrow?7:13;
+    for(var i=0;i<count;i++) items.push(place(makers[i%makers.length](), i, count, narrow, w, h, -14, 1, narrow?.45:.6, narrow?.75:1.05));
+    var cc=narrow?4:6;
+    for(var j=0;j<cc;j++){
+      var it=place(coin(), j+1, cc, narrow, w, h, -7, 1, narrow?.55:.7, narrow?.75:.95);
+      it.coin=true; it.obj.userData.hit.userData.item=it; it.ry=rand(1.2,2)*(j%2?1:-1); it.rx=0; it.obj.rotation.set(0,rand(0,6.28),0);
+      items.push(it); coins.push(it);
+    }
+    collected=0; coinT.textContent=coins.length; coinN.textContent='0'; coinEl.hidden=true;
+  }
+
+  function resize(){
+    var w=window.innerWidth, h=window.innerHeight;
+    renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+    if(Math.abs(w-lastW)>40 || !items.length){ lastW=w; build(); }   // only rebuild when the width really changes (phone address bar changes height only)
+  }
+
+  // ---------- coins: collect + achievement ----------
+  var ray=new THREE.Raycaster(), ndc=new THREE.Vector2(), pinkT=0;
+  function collect(it){
+    if(it.taken) return;
+    it.taken=true; it.takenT=0; collected++;
+    coinSound();
+    coinEl.hidden=false; coinN.textContent=collected;
+    coinEl.classList.remove('bump'); void coinEl.offsetWidth; coinEl.classList.add('bump');
+    if(reduce){ it.obj.visible=false; renderer.render(scene,camera); }
+    if(collected===coins.length){
+      setTimeout(function(){
+        fanfare(); pinkT=3.2;
+        toast(T('achTitle'), T('achName')+' — '+T('achDesc'), 4200, true);
+        clearTimeout(respawnTimer);
+        respawnTimer=setTimeout(function(){
+          coins.forEach(function(c){ c.taken=false; c.obj.visible=true; c.obj.scale.setScalar(c.s); c.obj.position.y=c.y; });
+          collected=0; coinN.textContent='0'; coinEl.hidden=true; if(reduce) renderer.render(scene,camera);
+        },7000);
+      },380);
+    }
+  }
+  document.addEventListener('pointerdown',function(e){
+    if(e.target.closest && e.target.closest('a,button,.link,.lang,.toast')) return;
+    ndc.set(e.clientX/window.innerWidth*2-1, -(e.clientY/window.innerHeight)*2+1);
+    world.updateMatrixWorld(true);
+    ray.setFromCamera(ndc,camera);
+    var targets=coins.filter(function(c){ return !c.taken; }).map(function(c){ return c.obj.userData.hit; });
+    var hits=ray.intersectObjects(targets,false);
+    if(hits.length) collect(hits[0].object.userData.item);
+  });
+
+  // ---------- AFK mode ----------
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var IDLE=15000, idleTimer, afk=false, sleep=0;
+  var touch=window.matchMedia&&window.matchMedia('(hover: none)').matches;
+  function goAfk(){ afk=true; document.body.classList.add('afk'); toast(T('afk'), touch?T('afkTap'):T('afkMove'), 0); }
+  function wake(){
+    if(afk){ afk=false; document.body.classList.remove('afk'); toast(T('back'),'',1800); }
+    clearTimeout(idleTimer); idleTimer=setTimeout(goAfk,IDLE);
+  }
+  if(!reduce){
+    ['pointermove','pointerdown','keydown','wheel','touchstart','scroll'].forEach(function(ev){ window.addEventListener(ev,wake,{passive:true}); });
+    wake();
+  }
+
+  // ---------- loop ----------
+  var mx=0,my=0,tx=0,ty=0, gridOff=0;
+  window.addEventListener('pointermove',function(e){ tx=e.clientX/window.innerWidth-.5; ty=e.clientY/window.innerHeight-.5; },{passive:true});
+  var pinkC=new THREE.Color(C.k), yelC=new THREE.Color(C.y);
+  function ease(t){ return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2; }
+
+  var clock=new THREE.Clock(), running=true;
+  function frame(){
+    if(!running) return;
+    var dt=Math.min(clock.getDelta(),.05), t=clock.elapsedTime;
+    sleep+=((afk?1:0)-sleep)*Math.min(1,dt*(afk?.7:3.5));
+    var awake=1-sleep, e=ease(Math.min(1,sleep*1.05));
+    mx+=(tx-mx)*.05; my+=(ty-my)*.05;
+
+    gridOff+=dt*1.1*awake; var off=gridOff%STEP; floorGrid.position.z=off; ceilGrid.position.z=off;
+    for(var i=0;i<N;i++){ var k=i*3+1; dust[k]+=dspd[i]*dt*(.15+.85*awake); if(dust[k]>14) dust[k]=-12; }
+    dgeo.attributes.position.needsUpdate=true;
+
+    items.forEach(function(it){
+      var o=it.obj;
+      if(it.taken){
+        if(!o.visible) return;
+        it.takenT+=dt; var p=Math.min(1,it.takenT/.45);
+        o.position.y+=dt*14; o.rotation.y+=dt*28; o.scale.setScalar(it.s*(1-p));
+        if(p>=1) o.visible=false; return;
+      }
+      o.rotation.x+=it.rx*dt*awake; o.rotation.y+=it.ry*dt*awake;
+      var ay=it.y+Math.sin(t*it.f+it.ph)*it.bob;
+      o.position.y=ay+(it.restY-ay)*e;
+    });
+
+    if(pinkT>0){ pinkT-=dt; var pk=Math.min(1,pinkT/.6, (3.2-pinkT)/.3); floorMat.color.copy(yelC).lerp(pinkC,Math.max(0,pk)); floorMat.opacity=.5+.3*Math.max(0,pk); }
+    else { floorMat.color.copy(yelC); floorMat.opacity=.5; }
+
+    env.rotation.y=mx*.04; env.rotation.x=my*.03;
+    world.rotation.y=mx*.12; world.rotation.x=my*.08;
+    world.position.y=(window.scrollY||0)*.004;
+    renderer.render(scene,camera);
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  var rt; window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(function(){ resize(); if(reduce) renderer.render(scene,camera); },150); });
+  if(reduce){ renderer.render(scene,camera); }
+  else {
+    document.addEventListener('visibilitychange',function(){ running=!document.hidden; if(running){ clock.getDelta(); requestAnimationFrame(frame);} });
+    requestAnimationFrame(frame);
+  }
+})();
+</script>
+</body>
+</html>
